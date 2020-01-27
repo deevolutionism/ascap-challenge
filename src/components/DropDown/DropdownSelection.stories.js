@@ -19,7 +19,7 @@ export const defaultOptionsData = [
 
 export const Default = () => ({
   components: { DropdownSelection },
-  template: `<dropdown-selection :options="options" :title="title"/>`,
+  template: `<dropdown-selection :options="options" :description="'Publisher Company Type'"/>`,
   props: {
     options: {
       default: defaultOptionsData

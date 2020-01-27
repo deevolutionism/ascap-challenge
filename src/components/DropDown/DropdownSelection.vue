@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="drop-down-selection d-inline-b" ref="comproot">
     <label>{{ label }}</label>
     <button @click="toggleDropdown"><span>{{ dropdownValue }}</span><chevron :orientation="computeChevronOrientation"/></button>
     <div>
@@ -19,13 +19,19 @@
 <script>
 import DropdownOption from "./DropdownOption.vue";
 import Chevron from "../chevron/Chevron.vue";
+import { componentClicked } from "../mixins/mixins.js";
 export default {
   name: 'drop-down-selection',
+  mixins: [componentClicked],
+  components: {
+    DropdownOption,
+    Chevron
+  },
   props: {
     options: {
-      type: Object,
+      type: Array,
       required: true,
-      default: () => ({})
+      default: () => {[]}
     },
     description: {
       type: String,
@@ -44,18 +50,43 @@ export default {
       selection: null,
     }
   },
+  mounted() {
+    document.addEventListener('click', e => {
+      this.handleWasComponentClicked(e)
+    })
+  },
   methods: {
-    toggleDropdown() {
-      this.showDropdown = !this.showDropdown;
+    toggleDropdown(state) {
+      switch(state) {
+        case 'open':
+          this.showDropdown = true;
+          break;
+        case 'close':
+          this.showDropdown = false;
+          break;
+        default:
+          this.showDropdown = !this.showDropdown;
+      }
     },
     handleSelect(option) {
       this.selection = option
       this.toggleDropdown()
+    },
+    handleWasComponentClicked(e) {
+      console.log(this.$refs.comproot);
+      let userClickedComponent = this.checkIfComponentClicked(
+            this.$refs.comproot.offsetLeft,
+            this.$refs.comproot.offsetTop,
+            this.$refs.comproot.offsetWidth,
+            this.$refs.comproot.offsetHeight,
+            e.clientX,
+            e.clientY
+          )
+      if(userClickedComponent === false) {
+        this.toggleDropdown('close');
+      }
+      console.log(userClickedComponent);
     }
-  },
-  components: {
-    DropdownOption,
-    Chevron
   },
   computed: {
     dropdownValue() {
