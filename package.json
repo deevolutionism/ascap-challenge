@@ -19,6 +19,8 @@
     "@storybook/addon-links": "^5.3.9",
     "@storybook/addons": "^5.3.9",
     "@storybook/vue": "^5.3.9",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+    "@vue/babel-preset-jsx": "^1.1.2",
     "@vue/cli-plugin-babel": "^4.1.2",
     "@vue/cli-plugin-eslint": "^4.1.2",
     "@vue/cli-service": "^4.1.2",
