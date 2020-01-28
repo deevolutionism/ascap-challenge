@@ -19,3 +19,17 @@ yarn run build
 ```
 yarn run lint
 ```
+
+
+# project overview
+
+# components
+
+# improvements
+
+### dropdown/dropdownSelection open/close toggle
+- the chevron could be replaced with a slot to allow customization
+- alternative to global onclick event handler to determine if the user wanted to collapse the dropdown. might be polluting + cause a performance hit because it gets called on every click.
+
+### component customization
+- components could be more customizable with the usage of slots

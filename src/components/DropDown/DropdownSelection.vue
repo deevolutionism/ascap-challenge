@@ -73,7 +73,9 @@ export default {
       this.toggleDropdown()
     },
     handleWasComponentClicked(e) {
-      console.log(this.$refs.comproot);
+      /*
+        close the dropdown if the user clicked outside of the element
+      */
       let userClickedComponent = this.checkIfComponentClicked(
             this.$refs.comproot.offsetLeft,
             this.$refs.comproot.offsetTop,
@@ -85,7 +87,6 @@ export default {
       if(userClickedComponent === false) {
         this.toggleDropdown('close');
       }
-      console.log(userClickedComponent);
     }
   },
   computed: {
