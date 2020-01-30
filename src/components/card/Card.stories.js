@@ -1,11 +1,11 @@
-import Card from "./Card.vue";
+import ascapCard from "./ascap-Card.vue";
 
 export default {
   title: "Card"
 }
 
 const defaultCardTemplate = `
-<Card :name="'test card'">
+<ascap-card :name="'test card'">
   <template v-slot:header>
     <div>
       <svg id="quavers" xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="22px" height="29px" viewBox="-26.663 -25.084 22 21.999" aria-hidden="true" class="c-icon c-icon--size-auto"><path fill="none" d="M-18.997-8.528h-4.443c-1.228,0-2.223,0.996-2.223,2.223c0,1.227,0.996,2.221,2.223,2.221h2.223
@@ -28,10 +28,10 @@ const defaultCardTemplate = `
       </li>
     </ul>
   </template>
-</Card>`
+</ascap-ard>`
 
 const activeCardTemplate = `
-<Card :name="name" :selected="selected">
+<ascap-card :name="name" :selected="selected">
   <template v-slot:header>
     <div>
       <svg id="quavers" xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="22px" height="29px" viewBox="-26.663 -25.084 22 21.999" aria-hidden="true" class="c-icon c-icon--size-auto"><path fill="none" d="M-18.997-8.528h-4.443c-1.228,0-2.223,0.996-2.223,2.223c0,1.227,0.996,2.221,2.223,2.221h2.223
@@ -54,12 +54,12 @@ const activeCardTemplate = `
       </li>
     </ul>
   </template>
-</Card>
+</ascap-card>
 `
 
 export const Default = () => ({
   components: {
-    Card
+    ascapCard
   },
   template: defaultCardTemplate,
   props: {
@@ -72,7 +72,7 @@ export const Default = () => ({
 
 export const Selected = () => ({
   components: {
-    Card
+    ascapCard
   },
   template: activeCardTemplate,
   props: {

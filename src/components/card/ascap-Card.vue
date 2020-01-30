@@ -1,9 +1,9 @@
 <template>
-  <div @click="handleClick" :class="['d-flex', 'flex-column', isSelected]">
-    <div>
+  <div @click="handleClick" :class="['d-flex', 'flex-column','border-normal', isSelected, cardStyle]">
+    <div :class="headerClassObject">
       <slot name="header"></slot>
     </div>
-    <div>
+    <div class="p-24">
       <slot name="body"></slot>
     </div>
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'card',
+  name: 'ascap-card',
   props: {
     name: {
       type: String,
@@ -22,16 +22,33 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    cardStyle: {
+      type: String,
+      required: false,
+      default: null
+    },
+    data: {
+      required: false,
+      default: null
+    },
+    classObjectFunc: {
+      type: Function,
+      required: false,
+      default: () => ({})
     }
   },
   methods: {
     handleClick() {
-      this.$emit('cardSelected', {name: this.name})
+      this.$emit('cardSelected', {name: this.name, data: this.data })
     }
   },
   computed: {
     isSelected() {
       return this.selected === this.name ? 'active' : null
+    },
+    headerClassObject() {
+      return this.classObjectFunc(this.$props)
     }
   }
 }

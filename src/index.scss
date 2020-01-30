@@ -1,0 +1,302 @@
+
+$ascap-primary: #1178ce;
+$ascap-primary-focus: #175da7;
+$ascap-light: #cecece;
+$ascap-lighter: #fafafa;
+$ascap-steel: rgb(169, 171, 182);
+$ascap-silver: #ededed;
+$ascap-black: #0d0d0d;
+$ascap-lightgradient: linear-gradient(-180deg,#fafafa 0%,#ededed 100%);
+
+
+button {
+  background-color: white;
+  border: 0px;
+  padding: 8px 20px;
+  text-transform: uppercase;
+  line-height: 18px;
+  font-weight: 400;
+}
+p,h1,h2,h3,h4,h5,h6,span,div {
+  font-family: "Circular Bold", sans-serif;
+}
+p {
+  font-size: 16px;
+  margin: 0 0 1em;
+  line-height: 1.5;
+  margin: 0 0 1em 0;
+}
+h1 {
+  font-size: 1.5em;
+  line-height: 1.29;
+  font-weight: normal;
+  margin-bottom: .33em;
+}
+h2 {
+  font-size: 1.25em;
+  line-height: 1.3;
+  font-weight: normal;
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: .33em;
+}
+h5 {
+  font-size: 1em;
+  margin: 0 0 .25em;
+  line-height: 1.25;
+}
+h6 {
+  font-size: 14px;
+}
+div {
+  background-color: white;
+}
+li {
+  font-family: sans-serif;
+  margin-bottom: 16px;
+}
+.no-list-style-type {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+a {
+  text-decoration: none;
+  color: $ascap-primary-focus;
+}
+
+
+.pos-rel {
+  position: relative;
+}
+.pos-abs {
+  position: absolute;
+}
+.d-inline {
+  display: inline;
+}
+.d-inline-b {
+  display: inline-block;
+}
+.d-block {
+  display: block;
+}
+.d-flex {
+  display: flex;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.border-light {
+  border: 1px solid $ascap-light;
+}
+.center {
+  text-align: center;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.capital {
+  text-transform: capitalize;
+}
+.overflow-y-scr {
+  overflow-y: scroll;
+}
+
+.normal {
+  background-color: white;
+  color: $ascap-black;
+  :hover {
+    background-color: $ascap-light;
+  }
+}
+.primary {
+  background-color: $ascap-primary;
+  color: white;
+  :hover {
+    background-color: $ascap-primary-focus;
+  }
+}
+
+.alert {
+  color: red;
+}
+.alert--b {
+  border: 1px solid red;
+}
+.hov-silver:hover {
+  background-color: $ascap-silver;
+}
+.white {
+  color: white;
+}
+
+.checkmark:before {
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  content: "✔";
+}
+
+// padding, margin, etc
+@mixin padding($amount) {
+  .p-#{$amount} {
+    padding: #{$amount}px;
+  }
+}
+
+@include padding(10);
+@include padding(12);
+@include padding(24);
+
+@mixin padding-yx($y, $x) {
+  .pyx-#{$y}-#{$x} {
+    padding: #{$y}px #{$x}px;
+  }
+}
+
+@include padding-yx(0,15);
+@include padding-yx(12,10);
+@include padding-yx(8,20);
+
+// $sign indicated if the values are + or -
+@mixin margin-xy($y, $x) {
+  .myx-#{$y}-#{$x} {
+    margin: #{$y}px #{$x}px;
+  }
+}
+
+@mixin margin-b($bottom) {
+  .mb-#{$bottom} {
+    margin-bottom: #{$bottom}px;
+  }
+}
+
+@include margin-xy(0, 0);
+@include margin-xy(16, 0);
+@include margin-xy(40, 0);
+@include margin-xy(0, -15);
+
+
+@include margin-b(16);
+
+
+// background color
+@mixin backgroundColor($name, $color) {
+  .bg-#{$name} {
+    background: $color;
+  }
+}
+
+@include backgroundColor("grey", $ascap-lightgradient);
+@include backgroundColor("primary", $ascap-primary-focus);
+@include backgroundColor("transparent", transparent);
+
+// borders
+@mixin border($name, $color, $width, $type, $radius, $t, $r, $b, $l) {
+  .border-#{$name} {
+    border-radius: $radius;
+    @if $t {
+      border-top: $width $type $color;
+    }
+    @if $l {
+      border-left: $width $type $color;
+    }
+    @if $b {
+      border-bottom: $width $type $color;
+    }
+    @if $r {
+      border-right: $width $type $color;
+    }
+    @if $name == 'active' {
+      :focus {
+        border: 0px;
+      }
+    }
+  }
+}
+@mixin border-b($amount, $color) {
+  .border-b-#{$amount} {
+    border-bottom: #{$amount}px;
+  }
+}
+
+@include border("active", $ascap-primary, 1px, solid, 2px, true, true, true, true);
+@include border("normal", $ascap-steel, 1px, solid, 2px, true, true, true, true);
+@include border("trl", $ascap-steel, 1px, solid, 2px, true, true, false, true);
+@include border("rbl", $ascap-steel, 1px, solid, 2px, false, true, true, true);
+@include border("trbl", $ascap-steel, 1px, solid, 2px, true, true, true, true);
+@include border('b', $ascap-steel, 1px, solid, 2px, false, false, true, false);
+
+
+@mixin color($name, $color) {
+  .color-#{$name} {
+    color: $color;
+  }
+}
+
+@include color("prime", $ascap-primary-focus);
+
+
+// font size
+@mixin fontsize($amount) {
+  .fs-#{$amount} {
+    font-size: #{$amount}px;
+  }
+}
+
+@include fontsize(18);
+@include fontsize(16);
+@include fontsize(14);
+
+@mixin boldness($amount) {
+  .bold-#{$amount} {
+    font-weight: #{$amount};
+  }
+}
+
+@include boldness(400);
+@include boldness(500);
+@include boldness(600);
+@include boldness(700);
+@include boldness(800);
+
+
+@mixin flexbasis($amount) {
+  .flx-basis-#{$amount} {
+    flex-basis: percentage($amount / 100);
+  }
+}
+
+@include flexbasis(33);
+
+
+@mixin maxheight($amount) {
+  .max-h-#{$amount} {
+    max-height: #{$amount}px;
+  }
+}
+
+@include maxheight(300);
+
+
+@mixin width($name, $amount) {
+  .w-#{$name} {
+    width: percentage( $amount );
+  }
+}
+
+@include width(100, 1);
+@include width(66, 0.6);
+

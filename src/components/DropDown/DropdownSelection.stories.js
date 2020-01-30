@@ -1,4 +1,4 @@
-import DropdownSelection from "./DropdownSelection";
+import ascapDropdownSelection from "./ascap-DropdownSelection";
 
 export default {
   title: 'DropdownSelection',
@@ -18,8 +18,8 @@ export const defaultOptionsData = [
 ];
 
 export const Default = () => ({
-  components: { DropdownSelection },
-  template: `<dropdown-selection :options="options" :description="'Publisher Company Type'"/>`,
+  components: { ascapDropdownSelection },
+  template: `<ascap-dropdown-selection :options="options" :description="'Publisher Company Type'"/>`,
   props: {
     options: {
       default: defaultOptionsData

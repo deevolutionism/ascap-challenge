@@ -1,20 +1,20 @@
 <template>
   <div>
-    <dropdown-selection :title="'hello world'"/>
+    <o-m-e></o-m-e>
   </div>
 </template>
 
 <script>
-
-import DropdownSelection from "./components/DropDown/DropdownSelection";
+import OME from "./components/containers/OME.vue";
 export default {
   name: 'app',
   components: {
-    DropdownSelection
+    OME
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "./index.scss";
 
 </style>

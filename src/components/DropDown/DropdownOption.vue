@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a @click="select"><span>{{ this.value }}</span></a>
+    <a class="d-block pyx-12-10 hov-silver" @click="select"><span class="fs-18">{{ this.value }}</span></a>
   </div>
 </template>
 

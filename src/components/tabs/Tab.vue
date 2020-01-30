@@ -1,3 +1,9 @@
+<template>
+  <div @click="selectTab">
+    <slot></slot>
+  </div>
+</template>
+
 <script>
 export default {
   name: "Tab",
@@ -5,21 +11,18 @@ export default {
     tabIndex: {
       type: Number,
       default: 0
+    },
+    data: {
+      default: null
     }
   },
   methods: {
-    toggleTab(e, tabIndex) {
-      this.$emit('selectedTab', { tabIndex })
+    selectTab() {
+      this.$emit('selectedTab', { 
+        tabIndex: this.tabIndex, 
+        data: this.data 
+      });
     }
   },
-  render: function(h) {
-    let tabIndex = 1;
-    console.log(this.$slots.default) 
-    return (
-      <div onClick={ e => this.toggleTab(e, tabIndex)}>
-        {this.$slots.default}
-      </div>
-    )
-  }
 }
 </script>

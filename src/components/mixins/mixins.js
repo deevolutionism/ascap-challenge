@@ -10,7 +10,7 @@ export const componentClicked = {
      * @param {number} cy cursor click x coord
      */
     checkIfComponentClicked(ox, oy, ow, oh, cx, cy) {
-      console.log(ox,oy,ow,oh,cx, cy);
+      cy = cy + window.scrollY; // account for scroll position
       if( ( ox < cx && cx < ( ow + ox ) ) && ( oy < cy && cy < ( oh + oy ) ) ) {
         return true
       } else {
