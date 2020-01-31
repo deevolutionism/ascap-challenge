@@ -79,20 +79,6 @@
         <p class="alert" v-show="allowContinue === false && dropdownSelection === null">Please select your publisher company type.</p>
       </div>
 
-      <!-- <div v-show="activeTab === 2" class="myx-40-0">
-        <h2 class="bold-600">Publisher Company Type</h2>
-        <p>Please select the federal tax classification of your publisher company.</p>
-        <ascap-dropdown-selection
-          :description="dropdownOptions.description" 
-          :options="dropdownOptions.options"
-          @selectedOption="handleDropdownSelection"
-          :dropdownStyle="dropdownStyle"
-          class="w-66"
-        />
-
-        <p class="alert" v-show="allowContinue === false && dropdownSelection === null">Please select your publisher company type.</p>
-      </div> -->
-
       <p class="fs-14">ASCAP uses TINCheck and SmartyStreets to verify certain information provided by you in connection with your application. Any information processed by TINCheck and SmartyStreets shall be subject to the privacy policies of <a href="">TINCheck</a> and <a href="">SmartyStreets</a>.</p>
       
       <ascap-button :buttonType="'btn-white'" class="mtrbl-0-10-0-0"><p class="fs-16 bold-600 myx-0-0">cancel</p></ascap-button>
