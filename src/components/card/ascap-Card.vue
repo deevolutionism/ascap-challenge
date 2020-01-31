@@ -1,5 +1,5 @@
 <template>
-  <div @click="handleClick" :class="['d-flex', 'flex-column','border-normal', isSelected, cardStyle]">
+  <div @click="handleClick" :class="['d-flex', 'flex-column','border-normal', 'pointer', isSelected, cardStyle]">
     <div :class="headerClassObject">
       <slot name="header"></slot>
     </div>

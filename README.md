@@ -33,3 +33,12 @@ yarn run lint
 
 ### component customization
 - components could be more customizable with the usage of slots
+
+
+### themeing
+- style themeing
+
+### design considerations and questions
+
+- how reusable should a component be?
+  - purely functional vs mixed form + function?

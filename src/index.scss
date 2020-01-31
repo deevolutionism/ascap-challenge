@@ -1,9 +1,11 @@
 
 $ascap-primary: #1178ce;
 $ascap-primary-focus: #175da7;
+$ascap-primary-highlight: #4dbdff;
 $ascap-light: #cecece;
 $ascap-lighter: #fafafa;
 $ascap-steel: rgb(169, 171, 182);
+$ascap-inactive: #a7a7a7;
 $ascap-silver: #ededed;
 $ascap-black: #0d0d0d;
 $ascap-lightgradient: linear-gradient(-180deg,#fafafa 0%,#ededed 100%);
@@ -16,6 +18,11 @@ button {
   text-transform: uppercase;
   line-height: 18px;
   font-weight: 400;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
 }
 p,h1,h2,h3,h4,h5,h6,span,div {
   font-family: "Circular Bold", sans-serif;
@@ -93,6 +100,9 @@ a {
 .justify-between {
   justify-content: space-between;
 }
+.justify-center {
+  justify-content: center;
+}
 .align-center {
   align-items: center;
 }
@@ -114,19 +124,31 @@ a {
 .overflow-y-scr {
   overflow-y: scroll;
 }
+.mx-auto {
+  margin: 0 auto;
+}
 
 .normal {
   background-color: white;
   color: $ascap-black;
-  :hover {
+  &:hover {
     background-color: $ascap-light;
   }
 }
 .primary {
   background-color: $ascap-primary;
   color: white;
-  :hover {
+  &:hover {
     background-color: $ascap-primary-focus;
+  }
+}
+.btn-white {
+  border: 1px solid $ascap-light;
+  background: white;
+  color: black;
+  &:hover {
+    background: $ascap-lighter;
+    border-color: $ascap-steel;
   }
 }
 
@@ -149,6 +171,9 @@ a {
   content: "✔";
 }
 
+
+
+
 // padding, margin, etc
 @mixin padding($amount) {
   .p-#{$amount} {
@@ -170,8 +195,22 @@ a {
 @include padding-yx(12,10);
 @include padding-yx(8,20);
 
+@mixin padding-tlbr($t, $r, $b, $l) {
+  .ptrbl-#{$t}-#{$r}-#{$b}-#{$l} {
+    padding-top: #{$t}px;
+    padding-right: #{$r}px;
+    padding-bottom: #{$b}px;
+    padding-left: #{$l}px;
+  }
+}
+
+@include padding-tlbr(0,0,0,50);
+
+
+
+
 // $sign indicated if the values are + or -
-@mixin margin-xy($y, $x) {
+@mixin margin-yx($y, $x) {
   .myx-#{$y}-#{$x} {
     margin: #{$y}px #{$x}px;
   }
@@ -183,13 +222,35 @@ a {
   }
 }
 
-@include margin-xy(0, 0);
-@include margin-xy(16, 0);
-@include margin-xy(40, 0);
-@include margin-xy(0, -15);
+@include margin-yx(0, 0);
+@include margin-yx(16, 0);
+@include margin-yx(40, 0);
+@include margin-yx(0, -15);
+@include margin-yx(30, 0);
+@include margin-yx(0,10);
 
 
 @include margin-b(16);
+
+@mixin margin-trbl($t, $r, $b, $l) {
+  .mtrbl-#{$t}-#{$r}-#{$b}-#{$l} {
+    margin-top: #{$t}px;
+    margin-right: #{$r}px;
+    margin-bottom: #{$b}px;
+    margin-left: #{$l}px;
+  }
+}
+@include margin-trbl(-8,0,0,0);
+@include margin-trbl(0,10,0,0);
+
+
+@mixin left($name, $amount) {
+  .left-#{$name} {
+    left: $amount;
+  }
+}
+@include left(-8, -8px);
+@include left(-72, -72px);
 
 
 // background color
@@ -201,10 +262,12 @@ a {
 
 @include backgroundColor("grey", $ascap-lightgradient);
 @include backgroundColor("primary", $ascap-primary-focus);
+@include backgroundColor("ascap", $ascap-primary);
 @include backgroundColor("transparent", transparent);
+@include backgroundColor("inactive", $ascap-inactive);
 
 // borders
-@mixin border($name, $color, $width, $type, $radius, $t, $r, $b, $l) {
+@mixin border($name, $color, $width, $type, $radius, $t, $r, $b, $l, $hoverColor) {
   .border-#{$name} {
     border-radius: $radius;
     @if $t {
@@ -224,6 +287,9 @@ a {
         border: 0px;
       }
     }
+    &:hover {
+      border-color: $hoverColor;
+    }
   }
 }
 @mixin border-b($amount, $color) {
@@ -232,12 +298,15 @@ a {
   }
 }
 
-@include border("active", $ascap-primary, 1px, solid, 2px, true, true, true, true);
-@include border("normal", $ascap-steel, 1px, solid, 2px, true, true, true, true);
-@include border("trl", $ascap-steel, 1px, solid, 2px, true, true, false, true);
-@include border("rbl", $ascap-steel, 1px, solid, 2px, false, true, true, true);
-@include border("trbl", $ascap-steel, 1px, solid, 2px, true, true, true, true);
-@include border('b', $ascap-steel, 1px, solid, 2px, false, false, true, false);
+@include border("active", $ascap-primary, 1px, solid, 2px, true, true, true, true, $ascap-primary-highlight);
+@include border("normal", $ascap-steel, 1px, solid, 2px, true, true, true, true, $ascap-primary-focus);
+@include border("bubble", white, 8px, solid, 100px, true, true, true, true, white);
+@include border("hover", $ascap-primary-highlight, 1px, solid, 2px, true, true, true, true, $ascap-primary-highlight);
+@include border("trl", $ascap-steel, 1px, solid, 2px, true, true, false, true, $ascap-primary-highlight);
+@include border("rbl", $ascap-steel, 1px, solid, 2px, false, true, true, true, $ascap-primary-highlight);
+@include border("trbl", $ascap-steel, 1px, solid, 2px, true, true, true, true, $ascap-primary-highlight);
+@include border('b', $ascap-steel, 1px, solid, 2px, false, false, true, false, $ascap-primary-highlight);
+@include border('l', $ascap-steel, 1px, solid, 2px, false, false, false, true, $ascap-primary-highlight);
 
 
 @mixin color($name, $color) {
@@ -247,6 +316,7 @@ a {
 }
 
 @include color("prime", $ascap-primary-focus);
+@include color("inactive", $ascap-inactive);
 
 
 // font size
@@ -259,6 +329,7 @@ a {
 @include fontsize(18);
 @include fontsize(16);
 @include fontsize(14);
+@include fontsize(12);
 
 @mixin boldness($amount) {
   .bold-#{$amount} {
@@ -290,6 +361,20 @@ a {
 
 @include maxheight(300);
 
+@mixin maxwidth($amount) {
+  .max-w-#{$amount} {
+    max-width: #{$amount}px;
+  }
+}
+@include maxwidth(1140);
+
+@mixin height($name, $amount) {
+  .hpx-#{$name} {
+    height: $amount;
+  }
+}
+@include height(18, 18px);
+@include height(28, 28px);
 
 @mixin width($name, $amount) {
   .w-#{$name} {
@@ -299,4 +384,12 @@ a {
 
 @include width(100, 1);
 @include width(66, 0.6);
+
+@mixin widthpx($name, $amount) {
+  .wpx-#{$name} {
+    width: $amount;
+  }
+}
+@include widthpx(18, 18px);
+@include widthpx(28, 28px);
 
