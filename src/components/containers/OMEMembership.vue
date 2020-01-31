@@ -10,7 +10,7 @@
           :key="data.header" 
           :tabIndex="index" 
           @selectedTab="handleSelectedTab" 
-          :data="data.component"
+          :data="data.header"
           class="pyx-0-15 mb-16 flx-basis-33"
         >
           <ascap-card 
@@ -47,7 +47,39 @@
       
       <p class="fs-14">* if you are under 18 years of age please <a href="">read more about how to join ASCAP</a></p>
 
-      <div v-if="activeTab === 0" class="myx-40-0">
+      <div v-show="activeTab === 0" class="myx-40-0">
+        <h2 class="bold-600">Publisher Company Type</h2>
+        <p>Please select the federal tax classification of your publisher company.</p>
+        <ascap-dropdown-selection
+          :description="dropdownOptions.description" 
+          :options="dropdownOptions.options"
+          @selectedOption="handleDropdownSelection"
+          :dropdownStyle="dropdownStyle"
+          class="w-66"
+          :reset="activeTab"
+        />
+
+        <p class="alert" v-show="allowContinue === false && dropdownSelection === null">Please select your publisher company type.</p>
+      </div>
+
+      <div v-show="activeTab === cardContent[0].header || activeTab === cardContent[2].header" class="myx-40-0">
+        <h2 class="bold-600">Publisher Company Type</h2>
+        <p>Please select the federal tax classification of your publisher company.</p>
+        <!-- key set to a unique string (the active tab name) to trigger component reload / state refresh -->
+        <ascap-dropdown-selection
+          :key="activeTab"
+          :description="dropdownOptions.description" 
+          :options="dropdownOptions.options"
+          @selectedOption="handleDropdownSelection"
+          :dropdownStyle="dropdownStyle"
+          class="w-66"
+          :reset="activeTab"
+        />
+
+        <p class="alert" v-show="allowContinue === false && dropdownSelection === null">Please select your publisher company type.</p>
+      </div>
+
+      <!-- <div v-show="activeTab === 2" class="myx-40-0">
         <h2 class="bold-600">Publisher Company Type</h2>
         <p>Please select the federal tax classification of your publisher company.</p>
         <ascap-dropdown-selection
@@ -59,23 +91,7 @@
         />
 
         <p class="alert" v-show="allowContinue === false && dropdownSelection === null">Please select your publisher company type.</p>
-      </div>
-      <div v-if="activeTab === 1">
-
-      </div>
-      <div v-if="activeTab === 2" class="myx-40-0">
-        <h2 class="bold-600">Publisher Company Type</h2>
-        <p>Please select the federal tax classification of your publisher company.</p>
-        <ascap-dropdown-selection
-          :description="dropdownOptions.description" 
-          :options="dropdownOptions.options"
-          @selectedOption="handleDropdownSelection"
-          :dropdownStyle="dropdownStyle"
-          class="w-66"
-        />
-
-        <p class="alert" v-show="allowContinue === false && dropdownSelection === null">Please select your publisher company type.</p>
-      </div>
+      </div> -->
 
       <p class="fs-14">ASCAP uses TINCheck and SmartyStreets to verify certain information provided by you in connection with your application. Any information processed by TINCheck and SmartyStreets shall be subject to the privacy policies of <a href="">TINCheck</a> and <a href="">SmartyStreets</a>.</p>
       
@@ -83,7 +99,6 @@
       <ascap-button 
         :buttonType="'primary'" 
         @handleClick="handleContinue"
-
       >
         <span class="fs-16 bold-600"><p class="fs-16 bold-600 myx-0-0">continue</p></span>
       </ascap-button>
@@ -107,11 +122,17 @@ export default {
   },
   methods: {
     handleSelectedCard(data) {
+      if(this.selectedCard !== data.name) {
+        // reset the dropdown selection if 
+        // the user selected a different
+        // membership type
+        this.dropdownSelection = null
+      }
       this.selectedCard = data.name;
       this.$emit('handleSelection', { name: data.name });
     },
     handleSelectedTab(data) {
-      this.activeTab = data.tabIndex;
+      this.activeTab = data.data;
     },
     handleDropdownSelection(data) {
       this.dropdownSelection = data.value;
@@ -124,19 +145,26 @@ export default {
         }
     },
     handleContinue() {
-      
+      /** 
+       * This function contains the meat - all the business logic for
+       * validating each possible form selection permutation.
+       * It's not very pretty. and it mutates state.
+       * Potential for a Vuex module to be created to keep track of
+       * the status and the end result.
+       * 
+      */
+
       let data = {
-        "selectedMembershipType": this.selectedCard,
-        "selectedBusinessStructureType": this.dropdownSelection,
         "writerPublisher": this.cardContent[0].header,
         "writer": this.cardContent[1].header,
         "publisher": this.cardContent[2].header,
       }
-      console.log(data, this.selectedCard)
-      if(data.selectedMembershipType == null) {
-          
+
+
+      if(this.selectedCard == null) {
+          // membership type not selected by the user
+
           this.allowContinue = false
-          console.log('membership not selected')
       } else if ( 
         (
           this.selectedCard == data.writerPublisher 
@@ -144,28 +172,31 @@ export default {
           this.selectedCard == data.publisher 
         ) 
         && 
-        ( data.selectedBusinessStructureType == false ) ) {
-          
+        ( this.dropdownSelection == null ) ) {
+          // business tax classification not selected 
+          console.log('tax classifcation not selected')
           this.allowContinue = false
-          console.log('dropdown not selected')
       } else if(this.selectedCard === data.writer) {
-          
-          this.continue = true;
-          console.log('allow continue')
-      } else if(
-        this.selectedMembershipType === data.writerPublisher 
-        || 
-        this.selectedMembershipType === data.publisher ) {
-          
+          // allow continue if the user just selected writer membership type
           this.allowContinue = true;
-          console.log('allow continue')
+      } else if(
+        this.selectedCard === data.writerPublisher 
+        || 
+        this.selectedCard === data.publisher ) {
+          // allow continue if the user picked either writer/publisher or publisher
+          // AND they selected their business tax classification
+          this.allowContinue = true;
       } else {
+          // if I somehow missed another condition, prevent continue
+          console.log('missed a case')
           this.allowContinue = false;
-          console.log('default', this.allowContinue)
       }
 
-
-      if(this.continue) {
+      console.log(data, this.dropdownSelection, this.allowContinue)
+      if(this.allowContinue) {
+        // emit the results the user selected from the options
+        // this lets parent components know when
+        // the user successfully filled out all required options
         this.$emit('formSuccess', {membership: this.selectedMembershipType, taxClassification: this.dropdownSelection});
       }
       
@@ -173,6 +204,9 @@ export default {
   },
   computed: {
     cardStyle() {
+      // reacts to form validation and
+      // applies the appropriate style, if any
+      // to the tab/card.
       if(this.allowContinue === null) {
         return null
       } else if(this.allowContinue === false && this.selectedCard === null) {
@@ -186,9 +220,13 @@ export default {
   },
   data() {
     return {
+      // self explanatory, holds the name value of the selected card
       selectedCard: null,
+      // used for toggling active/inactive styles on tabs
       activeTab: null,
+      // holds the dropdown selection result, if any
       dropdownSelection: null,
+      // 
       dropdownStyle: null,
       allowContinue: null,
       dropdownOptions: {

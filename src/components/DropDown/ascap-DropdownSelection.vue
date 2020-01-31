@@ -45,12 +45,16 @@ export default {
       type: String,
       required: false,
       default: "label"
+    },
+    reset: {
+      required: false,
+      default: false
     }
   },
   data() {
     return {
       showDropdown: false,
-      selection: null,
+      selection: this.reset ? null : null
     }
   },
   mounted() {
@@ -73,13 +77,23 @@ export default {
     },
     handleSelect(option) {
       this.selection = option;
-      this.$emit('selectedOption', option);
+      this.$emit('selectedOption', { ...option });
       this.toggleDropdown('close');
     },
     handleWasComponentClicked(e) {
-      /*
-        close the dropdown if the user clicked outside of the element
-      */
+      /**
+       * close the dropdown if a click was detected outside of the
+       * element.
+       * There's more than one way to do this.
+       * I'm only aware of a couple ways to solve this, 
+       * but would like to know alternative solutions.
+       * What I did was attach a global click event listener on component mount
+       * When the user clicks, it runs a simple calculation to 
+       * determine if the click coordinates fall inside the target elements box.
+       * The downside to this is that its polluting and maybe not so efficient b/c
+       * this function gets called on every-single-click.
+       * My hunch is there's a better solution.
+       */
       if(this.$refs.comproot === undefined) {
         return
       }

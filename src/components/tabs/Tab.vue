@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     selectTab() {
+      console.log('select tab ', this.tabIndex)
       this.$emit('selectedTab', { 
         tabIndex: this.tabIndex, 
         data: this.data 

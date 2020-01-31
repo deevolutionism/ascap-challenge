@@ -18,6 +18,7 @@
         <gated-linear-accordian-item v-for="(item, index) in selectedMemebershipType" :key="item" :index="index" :activeItemIndex="activeAccordianIndex" class="myx-30-0 pos-rel">
           <span :class="['pos-abs', 'left--72', 'mtrbl--8-0-0-0', index+1 === activeAccordianIndex ? 'bg-ascap' : 'bg-inactive', 'white', 'wpx-28', 'hpx-28', 'fs-12', 'center', 'justify-center', 'd-flex', 'align-center', 'border-bubble']">{{index + 2}}</span>
           <div><h2 :class="['bold-800', index+1 === activeAccordianIndex ? null : 'color-inactive']">{{item}}</h2></div>
+          <div></div>
         </gated-linear-accordian-item>
       </GatedLinearAccordian>
     </Content>
@@ -75,17 +76,14 @@ export default {
       this.activeAccordianIndex = this.activeAccordianIndex + 1;
     },
     handleMembershipSelection(data) {
-      console.log(data)
       this.activeMembershipType = data.name
     },
     incrementAccordianIndex() {
-      console.log('increment accordian index')
       this.activeAccordianIndex = this.activeAccordianIndex + 1;
     }
   },
   computed: {
     selectedMemebershipType() {
-      console.log(this.activeMembershipType)
       return this.memberships[this.activeMembershipType]
     }
   }
@@ -93,6 +91,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./index.scss";
+@use "./index.scss";
 
 </style>

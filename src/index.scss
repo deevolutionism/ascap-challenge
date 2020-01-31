@@ -153,10 +153,10 @@ a {
 }
 
 .alert {
-  color: red;
+  color: red!important;
 }
 .alert--b {
-  border: 1px solid red;
+  border: 1px solid red!important;
 }
 .hov-silver:hover {
   background-color: $ascap-silver;

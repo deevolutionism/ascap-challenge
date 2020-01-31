@@ -22,7 +22,6 @@ export default {
   },
   computed: {
     showItem() {
-      console.log('show template ? ', this.activeItemIndex, this.index)
       return this.activeItemIndex === this.index ? true : false;
     }
   }
