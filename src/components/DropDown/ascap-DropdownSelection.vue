@@ -2,7 +2,7 @@
   <div :class="selectorClassObject" ref="comproot">
     <label :class="labelClassObject">{{ description }}</label>
     <button class="d-flex flex-row justify-between align-center w-100" @click="toggleDropdown">
-      <span>{{ dropdownValue }}</span>
+      <p class="p-16 bold-600 myx-0-0">{{ dropdownValue }}</p>
       <chevron class="d-inline-b" :orientation="computeChevronOrientation"/>
     </button>
     <div>
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       showDropdown: false,
-      selection: this.reset ? null : null
+      selection: null
     }
   },
   mounted() {
