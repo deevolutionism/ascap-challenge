@@ -45,7 +45,15 @@ export default {
   },
   computed: {
     isSelected() {
-      return this.selected === this.name ? 'active' : null
+      switch(this.selected) {
+        case null:
+          return null
+        case this.name:
+          return 'active'
+        default:
+          return 'blurred'
+      }
+      //return this.selected === this.name ? 'active' : null
     },
     headerClassObject() {
       return this.classObjectFunc(this.$props)
@@ -54,9 +62,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .active {
   box-shadow: 0 0 15px -1px rgba(0,0,0,.5);
   border: 1px solid #1178ce;
+}
+.blurred {
+  filter: grayscale(100%);
+  opacity: 0.5;
+  &:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
 }
 </style>
