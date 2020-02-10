@@ -1,14 +1,16 @@
-import OME from "./OME.vue"
+import OMEMembership from "./OMEMembership.vue";
 
 export default {
   title: "OME Page"
 }
 
 export const Default = () => ({
-  components: {OME},
+  components: {OMEMembership},
   template: `
     <div>
-      <o-m-e></o-m-e>
+      <o-m-e-membership></o-m-e-membership>
     </div>
   `
 })
+
+ 

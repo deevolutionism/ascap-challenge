@@ -5,6 +5,9 @@
 </template>
 
 <script>
+// this component could be generalized
+// should use slot to accept an image
+// or accept a prop containing url of the image/icon
 export default {
   name: 'chevron',
   props: {
